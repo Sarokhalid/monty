@@ -1,5 +1,41 @@
 #include "monty.h"
 
+void mod(stack_t **stack, unsigned int line_num)
+{
+	int remainder;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't mod, stack too short\n", line_num);
+		exit(EXIT_FAILURE);
+	}
+
+	if ((*stack)->n == 0)
+	{
+		fprintf(stderr, "L%d: division by zero\n", line_num);
+		exit(EXIT_FAILURE);
+	}
+
+	remainder = (*stack)->next->n % (*stack)->n;
+	pop(stack, line_num);
+	(*stack)->n = remainder;
+}
+
+void mul(stack_t **stack, unsigned int line_num)
+{
+	int product;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't mul, stack too short\n", line_num);
+		exit(EXIT_FAILURE);
+	}
+
+	product = (*stack)->next->n * (*stack)->n;
+	pop(stack, line_num);
+	(*stack)->n = product;
+}
+
 void div_stack(stack_t **stack, unsigned int line_num)
 {
 	int quotient;
@@ -162,6 +198,10 @@ void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file)
 		sub(s, line_num);
 	else if (strcmp(op, "div") == 0)
 		div_stack(s, line_num);
+	else if (strcmp(op, "mul") == 0)
+		mul(s, line_num);
+	else if (strcmp(op, "mod") == 0)
+		mod(s, line_num);
 	else
 	{
 		fprintf(stderr, "L%d: unkown instruction %s\n", line_num, op);
