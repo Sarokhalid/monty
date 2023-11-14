@@ -1,5 +1,20 @@
 #include "monty.h"
 
+
+void swap(stack_t **stack, unsigned int line_num)
+{
+	int temp;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_num);
+		exit(EXIT_FAILURE);
+	}
+
+	temp = (*stack)->n;
+	(*stack)->n = (*stack)->next->n;
+	(*stack)->next->n = temp;
+}
 void push(stack_t **stack, unsigned int line_num)
 {
 	int val;
@@ -81,6 +96,8 @@ void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file)
 		pint(s, line_num);
 	else if (strcmp(op, "pop") == 0)
 		pop(s, line_num);
+	else if (strcmp(op, "swap") == 0)
+		swap(s, line_num);
 	else
 	{
 		fprintf(stderr, "L%d: unkown instruction %s\n", line_num, op);
