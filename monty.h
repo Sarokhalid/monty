@@ -37,6 +37,7 @@ void pint(stack_t **stack, unsigned int line_num);
 void pop(stack_t **stack, unsigned int line_num);
 void swap(stack_t **stack, unsigned int line_num);
 void add(stack_t **stack, unsigned int line_num);
+void nop(stack_t **stack, unsigned int line_num);
 void files(const char *fn);
 void free_stack(stack_t **stack);
 void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file);

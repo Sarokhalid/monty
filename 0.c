@@ -1,5 +1,10 @@
 #include "monty.h"
 
+void nop(stack_t **stack, unsigned int line_num)
+{
+	(void)stack;
+	(void)line_num;
+}
 
 void add(stack_t **stack, unsigned int line_num)
 {
@@ -115,6 +120,8 @@ void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file)
 		swap(s, line_num);
 	else if (strcmp(op, "add") == 0)
 		add(s, line_num);
+	else if (strcmp(op, "nop") == 0)
+		nop(s, line_num);
 	else
 	{
 		fprintf(stderr, "L%d: unkown instruction %s\n", line_num, op);
