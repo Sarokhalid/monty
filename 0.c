@@ -70,6 +70,25 @@ void pop(stack_t **stack, unsigned int line_num)
 	free(r);
 }
 
+
+void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file)
+{
+	if (strcmp(op, "push") == 0)
+		push(s, line_num);
+	else if (strcmp(op, "pall") == 0)
+		pall(s, line_num);
+	else if (strcmp(op, "pint") == 0)
+		pint(s, line_num);
+	else if (strcmp(op, "pop") == 0)
+		pop(s, line_num);
+	else
+	{
+		fprintf(stderr, "L%d: unkown instruction %s\n", line_num, op);
+		fclose(file);
+		exit(EXIT_FAILURE);
+	}
+}
+
 void files(const char *fn)
 {
 	stack_t *s = NULL;
@@ -88,23 +107,24 @@ void files(const char *fn)
 
 		if (op != NULL)
 		{
-			if (strcmp(op, "push") == 0)
-				push(&s, line_num);
-			else if (strcmp(op, "pall") == 0)
-				pall(&s, line_num);
-			else if (strcmp(op, "pint") == 0)
-				pint(&s, line_num);
-			else if (strcmp(op, "pop") == 0)
-				pop(&s, line_num);
-			else
-			{
-				fprintf(stderr, "L%d: unkown instruction %s\n", line_num, op);
-				fclose(file);
-				exit(EXIT_FAILURE);
-			}
+			process_opcode(op, &s, line_num, file);
 			line_num++;
 		}
 	}
 	fclose(file);
+	free_stack(&s);
 }
 
+void free_stack(stack_t **stack)
+{
+	stack_t *current_node = *stack;
+	stack_t *next_node;
+
+	while (current_node != NULL)
+	{
+		next_node = current_node->next;
+		free(current_node);
+		current_node = next_node;
+	}
+	*stack = NULL;
+}
