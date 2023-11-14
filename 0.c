@@ -1,5 +1,25 @@
 #include "monty.h"
 
+void pchar(stack_t **stack, unsigned int line_num)
+{
+	int ascii_val;
+
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't pchar, stack empty\n", line_num);
+		exit(EXIT_FAILURE);
+	}
+
+	ascii_val = (*stack)->n;
+	if (ascii_val < 0 || ascii_val > 127)
+	{
+		fprintf(stderr, "L%d: can't pchar, value out of range\n", line_num);
+		exit(EXIT_FAILURE);
+	}
+
+	printf("%c\n", ascii_val);
+}
+
 void mod(stack_t **stack, unsigned int line_num)
 {
 	int remainder;
@@ -202,6 +222,8 @@ void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file)
 		mul(s, line_num);
 	else if (strcmp(op, "mod") == 0)
 		mod(s, line_num);
+	else if (strcmp(op, "pchar") == 0)
+		pchar(s, line_num);
 	else
 	{
 		fprintf(stderr, "L%d: unkown instruction %s\n", line_num, op);
@@ -226,11 +248,12 @@ void files(const char *fn)
 	{
 		char *op = strtok(line, " \t\n");
 
-		if (op != NULL)
-		{
-			process_opcode(op, &s, line_num, file);
-			line_num++;
-		}
+		/* If the line is a comment or empty, skip to the next line */
+		if (op == NULL || op[0] == '#')
+			continue;
+
+		process_opcode(op, &s, line_num, file);
+		line_num++;
 	}
 	fclose(file);
 	free_stack(&s);
