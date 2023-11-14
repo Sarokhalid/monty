@@ -33,6 +33,10 @@ void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file)
 		mod(s, line_num);
 	else if (strcmp(op, "pchar") == 0)
 		pchar(s, line_num);
+	else if (strcmp(op, "pstr") == 0)
+		pstr(s, line_num);
+	else if (strcmp(op, "rotl") == 0)
+		rotl(s, line_num);
 	else
 	{
 		fprintf(stderr, "L%d: unkown instruction %s\n", line_num, op);
