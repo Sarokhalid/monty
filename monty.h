@@ -48,6 +48,7 @@ void mod(stack_t **stack, unsigned int line_num);
 void pchar(stack_t **stack, unsigned int line_num);
 void files(const char *fn);
 void free_stack(stack_t **stack);
+int is_integer(char *str);
 void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file);
 
 
