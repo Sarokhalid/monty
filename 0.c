@@ -1,5 +1,41 @@
 #include "monty.h"
 
+void div_stack(stack_t **stack, unsigned int line_num)
+{
+	int quotient;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't div, stack too short\n", line_num);
+		exit(EXIT_FAILURE);
+	}
+
+	if ((*stack)->n == 0)
+	{
+		fprintf(stderr, "L%d: division by zero\n", line_num);
+		exit(EXIT_FAILURE);
+	}
+
+	quotient = (*stack)->next->n / (*stack)->n;
+	pop(stack, line_num);
+	(*stack)->n = quotient;
+}
+
+void sub(stack_t **stack, unsigned int line_num)
+{
+	int diff;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't sub, stack too short\n", line_num);
+		exit(EXIT_FAILURE);
+	}
+
+	diff = (*stack)->next->n - (*stack)->n;
+	pop(stack, line_num);
+	(*stack)->n = diff;
+}
+
 void nop(stack_t **stack, unsigned int line_num)
 {
 	(void)stack;
@@ -122,6 +158,10 @@ void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file)
 		add(s, line_num);
 	else if (strcmp(op, "nop") == 0)
 		nop(s, line_num);
+	else if (strcmp(op, "sub") == 0)
+		sub(s, line_num);
+	else if (strcmp(op, "div") == 0)
+		div_stack(s, line_num);
 	else
 	{
 		fprintf(stderr, "L%d: unkown instruction %s\n", line_num, op);
