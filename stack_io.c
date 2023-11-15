@@ -80,7 +80,7 @@ void files(const char *fn)
 {
 	stack_t *s = NULL;
 	FILE *file = fopen(fn, "r");
-	char line[256];
+	char line[512];
 	unsigned int line_num = 1;
 
 	if (file == NULL)
