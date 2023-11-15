@@ -98,4 +98,5 @@ void files(const char *fn)
 	}
 	fclose(file);
 	free_stack(&s);
+
 }
