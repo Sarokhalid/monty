@@ -15,6 +15,7 @@ void push(stack_t **stack, unsigned int line_num)
 	if (!argument || !is_integer(argument))
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_num);
+		free_stack(stack);
 		exit(EXIT_FAILURE);
 	}
 

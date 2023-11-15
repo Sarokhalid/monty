@@ -71,17 +71,25 @@ void free_stack(stack_t **stack)
  *
  * Return: 1 if the string is a valid integer, 0 otherwise
  */
-int is_integer(char *str)
+int is_integer(const char *str)
 {
-	int i = 0;
+	int i;
 
-	if (str[0] == '-')
-		i = 1;
-	for (; str[i]; i++)
+	if (str[0] == '+' || str[0] == '-')
 	{
-		if (str[i] < '0' || str[i] > '9')
+		i = 1;
+	}
+	else
+	{
+		i = 0;
+	}
+
+	for (; str[i] != '\0'; i++)
+	{
+		if (!isdigit(str[i]))
+		{
 			return (0);
+		}
 	}
 	return (1);
-
 }
