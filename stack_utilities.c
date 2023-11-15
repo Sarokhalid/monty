@@ -41,7 +41,7 @@ void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file)
 		rotr(s, line_num);
 	else
 	{
-		fprintf(stderr, "L%d: unkown instruction %s\n", line_num, op);
+		fprintf(stderr, "L%d: unknown instruction %s\n", line_num, op);
 		fclose(file);
 		exit(EXIT_FAILURE);
 	}
