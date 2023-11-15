@@ -9,42 +9,28 @@
  */
 void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file)
 {
-	if (strcmp(op, "push") == 0)
-		push(s, line_num);
-	else if (strcmp(op, "pall") == 0)
-		pall(s, line_num);
-	else if (strcmp(op, "pint") == 0)
-		pint(s, line_num);
-	else if (strcmp(op, "pop") == 0)
-		pop(s, line_num);
-	else if (strcmp(op, "swap") == 0)
-		swap(s, line_num);
-	else if (strcmp(op, "add") == 0)
-		add(s, line_num);
-	else if (strcmp(op, "nop") == 0)
-		nop(s, line_num);
-	else if (strcmp(op, "sub") == 0)
-		sub(s, line_num);
-	else if (strcmp(op, "div") == 0)
-		div_stack(s, line_num);
-	else if (strcmp(op, "mul") == 0)
-		mul(s, line_num);
-	else if (strcmp(op, "mod") == 0)
-		mod(s, line_num);
-	else if (strcmp(op, "pchar") == 0)
-		pchar(s, line_num);
-	else if (strcmp(op, "pstr") == 0)
-		pstr(s, line_num);
-	else if (strcmp(op, "rotl") == 0)
-		rotl(s, line_num);
-	else if (strcmp(op, "rotr") == 0)
-		rotr(s, line_num);
-	else
+	int i = 0;
+
+	instruction_t opcodes[] = {
+		{"push", push}, {"pall", pall}, {"pint", pint}, {"pop", pop}, {"swap", swap},
+		{"add", add}, {"nop", nop}, {"sub", sub}, {"div", div_stack}, {"mul", mul},
+		{"mod", mod}, {"pchar", pchar}, {"pstr", pstr}, {"rotl", rotl},
+		{"rotr", rotr}, {NULL, NULL}
+	};
+
+	while (opcodes[i].opcode != NULL)
 	{
-		fprintf(stderr, "L%d: unknown instruction %s\n", line_num, op);
-		fclose(file);
-		exit(EXIT_FAILURE);
+		if (strcmp(op, opcodes[i].opcode) == 0)
+		{
+			opcodes[i].f(s, line_num);
+			return;
+		}
+		i++;
 	}
+
+	fprintf(stderr, "L%d: unknown instruction %s\n", line_num, op);
+	fclose(file);
+	exit(EXIT_FAILURE);
 }
 
 /**

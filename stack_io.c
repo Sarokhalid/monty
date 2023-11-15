@@ -95,6 +95,16 @@ void files(const char *fn)
 		/* If the line is a comment or empty, skip to the next line */
 		if (op == NULL || op[0] == '#')
 			continue;
+		if (strcmp(op, "stack") == 0)
+		{
+			mode = 0;
+			continue;
+		}
+		else if (strcmp(op, "queue") == 0)
+		{
+			mode = 1;
+			continue;
+		}
 
 		process_opcode(op, &s, line_num, file);
 		line_num++;

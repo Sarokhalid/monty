@@ -1,5 +1,7 @@
 #include "monty.h"
 
+int mode = 0; /* Mode Switch */
+
 /**
  * main - Entry point of the program
  * @argc: Argument count
