@@ -13,7 +13,7 @@ int pall(monty_t *monty, unsigned int line_num)
 	(void)line_num;
 
 	if (monty->stack == NULL)
-		return (-1);
+		return (0);
 
 	for (curr = monty->stack; curr != NULL; curr = curr->next)
 	{
