@@ -8,16 +8,15 @@
  */
 void pall(monty_t *monty, unsigned int line_num)
 {
-	stack_t *curr = monty->stack;
+	stack_t *curr;
 	(void)line_num;
 
-	if (curr == NULL)
+	if (monty->stack == NULL)
 		return;
 
-	while (curr != NULL)
+	for (curr = monty->stack; curr != NULL; curr = curr->next)
 	{
 		printf("%d\n", curr->n);
-		curr = curr->next;
 	}
 }
 

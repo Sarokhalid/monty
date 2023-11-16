@@ -66,9 +66,8 @@ int is_integer(const char *str)
 		i = 1;
 	for (; str[i]; i++)
 	{
-		if (str[i] < '0' || str[i] > '9')
+		if (!isdigit((unsigned char)str[i]))
 			return (0);
 	}
 	return (1);
-
 }
