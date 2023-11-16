@@ -45,33 +45,33 @@ typedef struct monty_s
 typedef struct instruction_s
 {
 	char *opcode;
-	void (*f)(monty_t *monty, unsigned int line_number);
+	int (*f)(monty_t *monty, unsigned int line_number);
 } instruction_t;
 
 
 
-void push(monty_t *monty, unsigned int line_num);
+int push(monty_t *monty, unsigned int line_num);
 void push_to_stack(monty_t *monty, stack_t *new_node);
 void push_to_queue(monty_t *monty, stack_t *new_node);
-void pall(monty_t *monty, unsigned int line_num);
-void pint(monty_t *monty, unsigned int line_num);
-void pop(monty_t *monty, unsigned int line_num);
-void swap(monty_t *monty, unsigned int line_num);
-void add(monty_t *monty, unsigned int line_num);
-void nop(monty_t *monty, unsigned int line_num);
-void sub(monty_t *monty, unsigned int line_num);
-void div_stack(monty_t *monty, unsigned int line_num);
-void mul(monty_t *monty, unsigned int line_num);
-void mod(monty_t *monty, unsigned int line_num);
-void pchar(monty_t *monty, unsigned int line_num);
-void pstr(monty_t *monty, unsigned int line_num);
-void rotl(monty_t *monty, unsigned int line_num);
-void rotr(monty_t *monty, unsigned int line_num);
-void files(const char *fn, monty_t *monty);
+int pall(monty_t *monty, unsigned int line_num);
+int pint(monty_t *monty, unsigned int line_num);
+int pop(monty_t *monty, unsigned int line_num);
+int swap(monty_t *monty, unsigned int line_num);
+int add(monty_t *monty, unsigned int line_num);
+int nop(monty_t *monty, unsigned int line_num);
+int sub(monty_t *monty, unsigned int line_num);
+int div_stack(monty_t *monty, unsigned int line_num);
+int mul(monty_t *monty, unsigned int line_num);
+int mod(monty_t *monty, unsigned int line_num);
+int pchar(monty_t *monty, unsigned int line_num);
+int pstr(monty_t *monty, unsigned int line_num);
+int rotl(monty_t *monty, unsigned int line_num);
+int rotr(monty_t *monty, unsigned int line_num);
+int files(const char *fn, monty_t *monty);
 void free_stack(monty_t *monty);
 int is_integer(const char *str);
-void process_opcode(char *op, monty_t *monty,
-		unsigned int line_num, FILE *file);
+int process_opcode(char *op, monty_t *monty,
+		unsigned int line_num);
 
 
 #endif /* MONTY_H */

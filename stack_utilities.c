@@ -5,12 +5,13 @@
  * @op: Opcode
  * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
- * @file: File
+ * Return: 0 in Success, -1 in Error
  */
-void process_opcode(char *op, monty_t *monty,
-		unsigned int line_num, FILE *file)
+int process_opcode(char *op, monty_t *monty,
+		unsigned int line_num)
 {
 	int i = 0;
+	int error;
 
 	instruction_t opcodes[] = {
 		{"push", push}, {"pall", pall}, {"pint", pint}, {"pop", pop}, {"swap", swap},
@@ -23,16 +24,16 @@ void process_opcode(char *op, monty_t *monty,
 	{
 		if (strcmp(op, opcodes[i].opcode) == 0)
 		{
-			opcodes[i].f(monty, line_num);
-			return;
+			error = opcodes[i].f(monty, line_num);
+			if (error != 0)
+				return (-1);
+			return (0);
 		}
 		i++;
 	}
 
 	fprintf(stderr, "L%d: unknown instruction %s\n", line_num, op);
-	fclose(file);
-	free_stack(monty);
-	exit(EXIT_FAILURE);
+	return (-1);
 }
 
 /**

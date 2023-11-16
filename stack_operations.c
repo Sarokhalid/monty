@@ -4,9 +4,9 @@
  * push - Adds a new node to the stack or queue.
  * @monty: Pointer to the current state of the stack.
  * @line_num: The line number where the instruction appears.
- *
+ * Return: 0 in Success, -1 in Error
  */
-void push(monty_t *monty, unsigned int line_num)
+int push(monty_t *monty, unsigned int line_num)
 {
 	int val;
 	char *argument;
@@ -17,7 +17,7 @@ void push(monty_t *monty, unsigned int line_num)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_num);
 		free_stack(monty);
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
 
 	val = atoi(argument);
@@ -26,7 +26,7 @@ void push(monty_t *monty, unsigned int line_num)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		free_stack(monty);
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
 
 	new_node->n = val;
@@ -36,6 +36,7 @@ void push(monty_t *monty, unsigned int line_num)
 		push_to_stack(monty, new_node);
 	else  /* Queue mode */
 		push_to_queue(monty, new_node);
+	return (0);
 }
 
 /**
@@ -68,7 +69,7 @@ void push_to_queue(monty_t *monty, stack_t *new_node)
 		{
 			last = last->next;
 		}
-		new_node->next = last;
+		new_node->next = NULL;
 		new_node->prev = last;
 		last->next = new_node;
 	}
@@ -83,15 +84,16 @@ void push_to_queue(monty_t *monty, stack_t *new_node)
  * pop - Removes the top element of the stack
  * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
+ * Return: 0 in Success, -1 in Error
  */
-void pop(monty_t *monty, unsigned int line_num)
+int pop(monty_t *monty, unsigned int line_num)
 {
 	stack_t *r;
 
 	if (monty->stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pop an empty stack\n", line_num);
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
 
 	if (monty->mode == 0)  /* Stack mode */
@@ -118,6 +120,7 @@ void pop(monty_t *monty, unsigned int line_num)
 		}
 	}
 	free(r);
+	return (0);
 }
 
 
@@ -125,8 +128,9 @@ void pop(monty_t *monty, unsigned int line_num)
  * swap - Swaps the top two elements of the stack
  * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
+ * Return: 0 in Success, -1 in Error
  */
-void swap(monty_t *monty, unsigned int line_num)
+int swap(monty_t *monty, unsigned int line_num)
 {
 	int temp;
 	stack_t *first, *second;
@@ -134,7 +138,7 @@ void swap(monty_t *monty, unsigned int line_num)
 	if (monty->stack == NULL || (monty->stack)->next == NULL)
 	{
 		fprintf(stderr, "L%d: can't swap, stack too short\n", line_num);
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
 
 	if (monty->mode == 0)  /* Stack mode */
@@ -153,4 +157,5 @@ void swap(monty_t *monty, unsigned int line_num)
 	temp = first->n;
 	first->n = second->n;
 	second->n = temp;
+	return (0);
 }
