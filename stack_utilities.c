@@ -31,6 +31,7 @@ void process_opcode(char *op, monty_t *monty,
 
 	fprintf(stderr, "L%d: unknown instruction %s\n", line_num, op);
 	fclose(file);
+	free_stack(monty);
 	exit(EXIT_FAILURE);
 }
 

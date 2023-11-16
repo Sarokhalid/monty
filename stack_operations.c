@@ -68,9 +68,9 @@ void push_to_queue(monty_t *monty, stack_t *new_node)
 		{
 			last = last->next;
 		}
-
-		last->next = new_node;
+		new_node->next = last;
 		new_node->prev = last;
+		last->next = new_node;
 	}
 	else
 	{

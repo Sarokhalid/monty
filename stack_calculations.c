@@ -7,7 +7,7 @@
  */
 void add(monty_t *monty, unsigned int line_num)
 {
-	int sum;
+	int sum = 0;
 	stack_t *first, *second;
 
 	if (monty->stack == NULL || (monty->stack)->next == NULL)
@@ -29,10 +29,17 @@ void add(monty_t *monty, unsigned int line_num)
 
 		second = first->prev;
 	}
-
 	sum = first->n + second->n;
-	pop(monty, line_num);
-	(monty->stack)->n = sum;
+	if (monty->mode == 0)
+	{ /* Stack mode */
+		pop(monty, line_num);
+		(monty->stack)->n = sum;
+	}
+	else
+	{ /* Queue mode */
+		second->n = sum;
+		pop(monty, line_num);
+	}
 }
 
 /**
