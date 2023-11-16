@@ -24,12 +24,6 @@ void add(monty_t *monty, unsigned int line_num)
 	else  /* Queue mode */
 	{
 		first = monty->stack;
-		if (first->next == NULL)
-		{
-			fprintf(stderr, "L%d: can't add, stack too short\n", line_num);
-			exit(EXIT_FAILURE);
-		}
-
 		while (first->next != NULL)
 			first = first->next;
 
