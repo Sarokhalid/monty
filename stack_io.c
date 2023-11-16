@@ -3,13 +3,13 @@
 /**
  * pall - Prints all the values on the stack
  * starting from the top of the stack
- * @stack: Stack
+ * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
  */
-void pall(stack_t **stack, unsigned int line_num)
+void pall(monty_t *monty, unsigned int line_num)
 {
-	stack_t *curr = *stack;
-	(void) line_num;
+	stack_t *curr = monty->stack;
+	(void)line_num;
 
 	if (curr == NULL)
 		return;
@@ -23,46 +23,46 @@ void pall(stack_t **stack, unsigned int line_num)
 
 /**
  * pint - Prints the value at the top of the stack
- * @stack: Stack
+ * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
  */
-void pint(stack_t **stack, unsigned int line_num)
+void pint(monty_t *monty, unsigned int line_num)
 {
-	if (*stack == NULL)
+	if (monty->stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pint, stack empty\n", line_num);
 		exit(EXIT_FAILURE);
 	}
-	printf("%d\n", (*stack)->n);
+	printf("%d\n", (monty->stack)->n);
 }
 
 /**
  * nop - The opcode that doesn’t do anything
- * @stack: Stack
+ * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
  */
-void nop(stack_t **stack, unsigned int line_num)
+void nop(monty_t *monty, unsigned int line_num)
 {
-	(void)stack;
+	(void)monty;
 	(void)line_num;
 }
 
 /**
  * pchar - Prints the char at the top of the stack
- * @stack: Stack
+ * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
  */
-void pchar(stack_t **stack, unsigned int line_num)
+void pchar(monty_t *monty, unsigned int line_num)
 {
 	int ascii_val;
 
-	if (*stack == NULL)
+	if (monty->stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pchar, stack empty\n", line_num);
 		exit(EXIT_FAILURE);
 	}
 
-	ascii_val = (*stack)->n;
+	ascii_val = (monty->stack)->n;
 	if (ascii_val < 0 || ascii_val > 127)
 	{
 		fprintf(stderr, "L%d: can't pchar, value out of range\n", line_num);
@@ -75,10 +75,10 @@ void pchar(stack_t **stack, unsigned int line_num)
 /**
  * files - Processes the file containing Monty byte codes
  * @fn: File name
+ * @monty: Pointer to the current state of the stack.
  */
-void files(const char *fn)
+void files(const char *fn, monty_t *monty)
 {
-	stack_t *s = NULL;
 	FILE *file = fopen(fn, "r");
 	char line[512];
 	unsigned int line_num = 1;
@@ -97,19 +97,19 @@ void files(const char *fn)
 			continue;
 		if (strcmp(op, "stack") == 0)
 		{
-			mode = 0;
+			monty->mode = 0;
 			continue;
 		}
 		else if (strcmp(op, "queue") == 0)
 		{
-			mode = 1;
+			monty->mode = 1;
 			continue;
 		}
 
-		process_opcode(op, &s, line_num, file);
+		process_opcode(op, monty, line_num, file);
 		line_num++;
 	}
 	fclose(file);
-	free_stack(&s);
+	free_stack(monty);
 
 }

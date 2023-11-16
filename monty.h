@@ -23,6 +23,19 @@ typedef struct stack_s
 } stack_t;
 
 /**
+ * struct monty_s - Structure to hold the state of the stack or queue
+ * @mode: Mode of operation, 0 for stack (LIFO) and 1 for queue (FIFO)
+ * @stack: Pointer to the top (or bottom, depending on mode)
+ * of the stack or queue
+ *
+ */
+typedef struct monty_s
+{
+	int mode;
+	stack_t *stack;
+} monty_t;
+
+/**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
  * @f: function to handle the opcode
@@ -32,32 +45,33 @@ typedef struct stack_s
 typedef struct instruction_s
 {
 	char *opcode;
-	void (*f)(stack_t **stack, unsigned int line_number);
+	void (*f)(monty_t *monty, unsigned int line_number);
 } instruction_t;
 
-extern int mode;
 
-void push(stack_t **stack, unsigned int line_num);
-void push_to_stack(stack_t **stack, stack_t *new_node);
-void push_to_queue(stack_t **stack, stack_t *new_node);
-void pall(stack_t **stack, unsigned int line_num);
-void pint(stack_t **stack, unsigned int line_num);
-void pop(stack_t **stack, unsigned int line_num);
-void swap(stack_t **stack, unsigned int line_num);
-void add(stack_t **stack, unsigned int line_num);
-void nop(stack_t **stack, unsigned int line_num);
-void sub(stack_t **stack, unsigned int line_num);
-void div_stack(stack_t **stack, unsigned int line_num);
-void mul(stack_t **stack, unsigned int line_num);
-void mod(stack_t **stack, unsigned int line_num);
-void pchar(stack_t **stack, unsigned int line_num);
-void pstr(stack_t **stack, unsigned int line_num);
-void rotl(stack_t **stack, unsigned int line_num);
-void rotr(stack_t **stack, unsigned int line_num);
-void files(const char *fn);
-void free_stack(stack_t **stack);
+
+void push(monty_t *monty, unsigned int line_num);
+void push_to_stack(monty_t *monty, stack_t *new_node);
+void push_to_queue(monty_t *monty, stack_t *new_node);
+void pall(monty_t *monty, unsigned int line_num);
+void pint(monty_t *monty, unsigned int line_num);
+void pop(monty_t *monty, unsigned int line_num);
+void swap(monty_t *monty, unsigned int line_num);
+void add(monty_t *monty, unsigned int line_num);
+void nop(monty_t *monty, unsigned int line_num);
+void sub(monty_t *monty, unsigned int line_num);
+void div_stack(monty_t *monty, unsigned int line_num);
+void mul(monty_t *monty, unsigned int line_num);
+void mod(monty_t *monty, unsigned int line_num);
+void pchar(monty_t *monty, unsigned int line_num);
+void pstr(monty_t *monty, unsigned int line_num);
+void rotl(monty_t *monty, unsigned int line_num);
+void rotr(monty_t *monty, unsigned int line_num);
+void files(const char *fn, monty_t *monty);
+void free_stack(monty_t *monty);
 int is_integer(const char *str);
-void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file);
+void process_opcode(char *op, monty_t *monty,
+		unsigned int line_num, FILE *file);
 
 
 #endif /* MONTY_H */

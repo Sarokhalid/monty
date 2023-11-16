@@ -3,11 +3,12 @@
 /**
  * process_opcode - Processes an opcode
  * @op: Opcode
- * @s: Stack
+ * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
  * @file: File
  */
-void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file)
+void process_opcode(char *op, monty_t *monty,
+		unsigned int line_num, FILE *file)
 {
 	int i = 0;
 
@@ -22,7 +23,7 @@ void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file)
 	{
 		if (strcmp(op, opcodes[i].opcode) == 0)
 		{
-			opcodes[i].f(s, line_num);
+			opcodes[i].f(monty, line_num);
 			return;
 		}
 		i++;
@@ -35,11 +36,11 @@ void process_opcode(char *op, stack_t **s, unsigned int line_num, FILE *file)
 
 /**
  * free_stack - Frees a stack
- * @stack: Stack
+ * @monty: Pointer to the current state of the stack.
  */
-void free_stack(stack_t **stack)
+void free_stack(monty_t *monty)
 {
-	stack_t *current_node = *stack;
+	stack_t *current_node = monty->stack;
 	stack_t *next_node;
 
 	while (current_node != NULL)
@@ -48,7 +49,7 @@ void free_stack(stack_t **stack)
 		free(current_node);
 		current_node = next_node;
 	}
-	*stack = NULL;
+	monty->stack = NULL;
 }
 
 /**

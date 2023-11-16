@@ -1,7 +1,5 @@
 #include "monty.h"
 
-int mode = 0; /* Mode Switch */
-
 /**
  * main - Entry point of the program
  * @argc: Argument count
@@ -11,6 +9,7 @@ int mode = 0; /* Mode Switch */
 int main(int argc, char *argv[])
 {
 	const char *fn = argv[1] ? argv[1] : "";
+	monty_t monty = {0, NULL};
 
 	if (argc != 2)
 	{
@@ -18,7 +17,7 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	files(fn);
+	files(fn, &monty);
 
 	return (0);
 }

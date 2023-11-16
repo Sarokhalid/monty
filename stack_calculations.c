@@ -2,96 +2,104 @@
 
 /**
  * add - Adds the top two elements of the stack
- * @stack: Stack
+ * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
  */
-void add(stack_t **stack, unsigned int line_num)
+void add(monty_t *monty, unsigned int line_num)
 {
 	int sum;
 	stack_t *first, *second;
 
-	if (*stack == NULL || (*stack)->next == NULL)
+	if (monty->stack == NULL || (monty->stack)->next == NULL)
 	{
 		fprintf(stderr, "L%d: can't add, stack too short\n", line_num);
 		exit(EXIT_FAILURE);
 	}
-	if (mode == 0)  /* Stack mode */
+
+	if (monty->mode == 0)  /* Stack mode */
 	{
-		first = *stack;
-		second = (*stack)->next;
+		first = monty->stack;
+		second = (monty->stack)->next;
 	}
 	else  /* Queue mode */
 	{
-		first = *stack;
+		first = monty->stack;
+		if (first->next == NULL)
+		{
+			fprintf(stderr, "L%d: can't add, stack too short\n", line_num);
+			exit(EXIT_FAILURE);
+		}
+
 		while (first->next != NULL)
 			first = first->next;
+
 		second = first->prev;
 	}
 
 	sum = first->n + second->n;
-	pop(stack, line_num);
-	(*stack)->n = sum;
+	pop(monty, line_num);
+	(monty->stack)->n = sum;
 }
 
 /**
  * sub - Subtracts the top element of the stack
  * from the second top element of the stack
- * @stack: Stack
+ * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
  */
-void sub(stack_t **stack, unsigned int line_num)
+void sub(monty_t *monty, unsigned int line_num)
 {
 	int diff;
 	stack_t *first, *second;
 
-	if (*stack == NULL || (*stack)->next == NULL)
+	if (monty->stack == NULL || (monty->stack)->next == NULL)
 	{
 		fprintf(stderr, "L%d: can't sub, stack too short\n", line_num);
 		exit(EXIT_FAILURE);
 	}
 
-	if (mode == 0)  /* Stack mode */
+	if (monty->mode == 0)  /* Stack mode */
 	{
-		first = *stack;
-		second = (*stack)->next;
+		first = monty->stack;
+		second = (monty->stack)->next;
 	}
 	else  /* Queue mode */
 	{
-		first = *stack;
+		first = monty->stack;
 		while (first->next != NULL)
 			first = first->next;
 		second = first->prev;
 	}
 
 	diff = first->n - second->n;
-	pop(stack, line_num);
-	(*stack)->n = diff;
+	pop(monty, line_num);
+	(monty->stack)->n = diff;
 }
 /**
  * div_stack - Divides the second top element of the stack
  * by the top element of the stack
- * @stack: Stack
+ * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
  */
-void div_stack(stack_t **stack, unsigned int line_num)
+void div_stack(monty_t *monty, unsigned int line_num)
 {
 	int quotient;
 	stack_t *first, *second;
 
-	if (*stack == NULL || (*stack)->next == NULL)
+	if (monty->stack == NULL || (monty->stack)->next == NULL)
 	{
 		fprintf(stderr, "L%d: can't div, stack too short\n", line_num);
 		exit(EXIT_FAILURE);
 	}
 
-	if (mode == 0)  /* Stack mode */
+	if (monty->mode == 0)  /* Stack mode */
 	{
-		first = *stack;
-		second = (*stack)->next;
+		first = monty->stack;
+		second = (monty->stack)->next;
 	}
 	else  /* Queue mode */
 	{
-		first = *stack;
+		first = monty->stack;
 		while (first->next != NULL)
 			first = first->next;
 		second = first->prev;
@@ -104,70 +112,70 @@ void div_stack(stack_t **stack, unsigned int line_num)
 	}
 
 	quotient = second->n / first->n;
-	pop(stack, line_num);
-	(*stack)->n = quotient;
+	pop(monty, line_num);
+	(monty->stack)->n = quotient;
 }
 
 /**
  * mul - Multiplies the second top element of the stack
  * with the top element of the stack
- * @stack: Stack
+ * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
  */
-void mul(stack_t **stack, unsigned int line_num)
+void mul(monty_t *monty, unsigned int line_num)
 {
 	int product;
 	stack_t *first, *second;
 
-	if (*stack == NULL || (*stack)->next == NULL)
+	if (monty->stack == NULL || (monty->stack)->next == NULL)
 	{
 		fprintf(stderr, "L%d: can't mul, stack too short\n", line_num);
 		exit(EXIT_FAILURE);
 	}
 
-	if (mode == 0)  /* Stack mode */
+	if (monty->mode == 0)  /* Stack mode */
 	{
-		first = *stack;
-		second = (*stack)->next;
+		first = monty->stack;
+		second = (monty->stack)->next;
 	}
 	else  /* Queue mode */
 	{
-		first = *stack;
+		first = monty->stack;
 		while (first->next != NULL)
 			first = first->next;
 		second = first->prev;
 	}
 
 	product = first->n * second->n;
-	pop(stack, line_num);
-	(*stack)->n = product;
+	pop(monty, line_num);
+	(monty->stack)->n = product;
 }
 
 /**
  * mod - Computes the remainder of the division of the second
  * top element of the stack by the top element of the stack
- * @stack: Stack
+ * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
  */
-void mod(stack_t **stack, unsigned int line_num)
+void mod(monty_t *monty, unsigned int line_num)
 {
 	int remainder;
 	stack_t *first, *second;
 
-	if (*stack == NULL || (*stack)->next == NULL)
+	if (monty->stack == NULL || (monty->stack)->next == NULL)
 	{
 		fprintf(stderr, "L%d: can't mod, stack too short\n", line_num);
 		exit(EXIT_FAILURE);
 	}
 
-	if (mode == 0)  /* Stack mode */
+	if (monty->mode == 0)  /* Stack mode */
 	{
-		first = *stack;
-		second = (*stack)->next;
+		first = monty->stack;
+		second = (monty->stack)->next;
 	}
 	else  /* Queue mode */
 	{
-		first = *stack;
+		first = monty->stack;
 		while (first->next != NULL)
 			first = first->next;
 		second = first->prev;
@@ -180,6 +188,6 @@ void mod(stack_t **stack, unsigned int line_num)
 	}
 
 	remainder = second->n % first->n;
-	pop(stack, line_num);
-	(*stack)->n = remainder;
+	pop(monty, line_num);
+	(monty->stack)->n = remainder;
 }

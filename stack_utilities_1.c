@@ -2,13 +2,13 @@
 
 /**
  * pstr - Prints the string starting at the top of the stack
- * @stack: Double pointer to the top of the stack
+ * @monty: Pointer to the current state of the stack.
  * @line_num: The line number
  * If the stack is empty, it prints only a new line.
  */
-void pstr(stack_t **stack, unsigned int line_num)
+void pstr(monty_t *monty, unsigned int line_num)
 {
-	stack_t *current_node = *stack;
+	stack_t *current_node = monty->stack;
 
 	(void)line_num;
 
@@ -22,56 +22,56 @@ void pstr(stack_t **stack, unsigned int line_num)
 
 /**
  * rotl - Rotates the stack to the top
- * @stack: Double pointer to the top of the stack
+ * @monty: Pointer to the current state of the stack.
  * @line_num: The line number
  */
-void rotl(stack_t **stack, unsigned int line_num)
+void rotl(monty_t *monty, unsigned int line_num)
 {
 	stack_t *last_node;
 
 	(void)line_num;
 
-	if (*stack == NULL || (*stack)->next == NULL)
+	if (monty->stack == NULL || (monty->stack)->next == NULL)
 	{
 		return;
 	}
 
-	last_node = *stack;
+	last_node = monty->stack;
 	while (last_node->next != NULL)
 	{
 		last_node = last_node->next;
 	}
 
-	last_node->next = *stack;
-	(*stack)->prev = last_node;
-	*stack = (*stack)->next;
-	(*stack)->prev->next = NULL;
-	(*stack)->prev = NULL;
+	last_node->next = monty->stack;
+	(monty->stack)->prev = last_node;
+	monty->stack = (monty->stack)->next;
+	(monty->stack)->prev->next = NULL;
+	(monty->stack)->prev = NULL;
 }
 
 /**
  * rotr - Rotates the stack to the bottom
- * @stack: Double pointer to the top of the stack
+ * @monty: Pointer to the current state of the stack.
  * @line_num: The line number
  *
  */
-void rotr(stack_t **stack, unsigned int line_num)
+void rotr(monty_t *monty, unsigned int line_num)
 {
 	stack_t *last_node;
 
 	(void)line_num;
-	if (*stack == NULL || (*stack)->next == NULL)
+	if (monty->stack == NULL || (monty->stack)->next == NULL)
 	{
 		return;
 	}
-	last_node = *stack;
+	last_node = monty->stack;
 	while (last_node->next != NULL)
 	{
 		last_node = last_node->next;
 	}
-	last_node->next = *stack;
-	(*stack)->prev = last_node;
-	*stack = last_node;
+	last_node->next = monty->stack;
+	(monty->stack)->prev = last_node;
+	monty->stack = last_node;
 	last_node->prev->next = NULL;
 	last_node->prev = NULL;
 }
