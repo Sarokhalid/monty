@@ -2,7 +2,7 @@
 
 /**
  * pall - Prints All the values on the stack
- * starting from the top of the stack
+ * starting from The top of the stack
  * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
  * Return: 0 in Success, -1 in Error
