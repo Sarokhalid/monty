@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * push - Adds a new node to the stack or queue.
+ * push - Adds a New node to the stack or queue.
  * @monty: Pointer to the current state of the stack.
  * @line_num: The line number where the instruction appears.
  * Return: 0 in Success, -1 in Error
