@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * pstr - Prints the string starting at the top of the stack
+ * pstr - Prints The string starting at the top of the stack
  * @monty: Pointer to the current state of the stack.
  * @line_num: The line number
  * If the stack is empty, it prints only a new line.
