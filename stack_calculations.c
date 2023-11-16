@@ -65,7 +65,7 @@ void sub(monty_t *monty, unsigned int line_num)
 		second = first->prev;
 	}
 
-	diff = first->n - second->n;
+	diff = second->n - first->n;
 	pop(monty, line_num);
 	(monty->stack)->n = diff;
 }

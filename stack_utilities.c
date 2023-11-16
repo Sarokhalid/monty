@@ -60,23 +60,15 @@ void free_stack(monty_t *monty)
  */
 int is_integer(const char *str)
 {
-	int i;
+	int i = 0;
 
-	if (str[0] == '+' || str[0] == '-')
-	{
+	if (str[0] == '-')
 		i = 1;
-	}
-	else
+	for (; str[i]; i++)
 	{
-		i = 0;
-	}
-
-	for (; str[i] != '\0'; i++)
-	{
-		if (!isdigit(str[i]))
-		{
+		if (str[i] < '0' || str[i] > '9')
 			return (0);
-		}
 	}
 	return (1);
+
 }
