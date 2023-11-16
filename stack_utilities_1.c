@@ -5,7 +5,7 @@
  * @monty: Pointer to the current state of the stack.
  * @line_num: The line number
  * If the stack is empty, it prints only a new line.
- * Return: 0 in Success, -1 in Error
+ * Return: 0 in Success, -1 in error
  */
 int pstr(monty_t *monty, unsigned int line_num)
 {
