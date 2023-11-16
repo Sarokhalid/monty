@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * process_opcode - Processes an opcode
+ * process_opcode - Processes an Opcode
  * @op: Opcode
  * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
