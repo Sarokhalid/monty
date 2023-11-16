@@ -92,7 +92,7 @@ int files(const char *fn, monty_t *monty)
 	unsigned int line_num = 1;
 	int error;
 
-	if (file == NULL)
+	if (fn == NULL || file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", fn);
 		return (-1);
