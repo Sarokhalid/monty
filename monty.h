@@ -36,7 +36,7 @@ typedef struct monty_s
 } monty_t;
 
 /**
- * struct instruction_s - opcode and its function
+ * struct instruction_s - Opcode and its function
  * @opcode: the opcode
  * @f: function to handle the opcode
  * Description: opcode and its function
