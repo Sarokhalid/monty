@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * add - Adds the top two elements of the stack
+ * add - Adds The top two elements of the stack
  * @monty: Pointer to the current state of the stack.
  * @line_num: Line number
  * Return: 0 in Success, -1 in Error
