@@ -3,7 +3,7 @@
 /**
  * push - Adds a New node to the stack or queue.
  * @monty: Pointer to the current state of the stack.
- * @line_num: The line number where the instruction appears.
+ * @line_num: The Line number where the instruction appears.
  * Return: 0 in Success, -1 in Error
  */
 int push(monty_t *monty, unsigned int line_num)
